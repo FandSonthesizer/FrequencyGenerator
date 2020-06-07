@@ -1,4 +1,5 @@
 
+
 /*
  * Frequency generator:
  * Connect 2 Potentiometers To A0 and A1
@@ -50,6 +51,7 @@ void loop() {
       Serial.println("Start Alignment");
       pwmWrite(PWM_OUT, maxPWMAmplitude);
       pwmWrite(PWM_OUT2, maxPWMAmplitude);
+     
     }
     else{
       Serial.println("F&S Sonthesizer Frequency Generator");
@@ -77,26 +79,25 @@ void updateAnalogControls(int which) {
       case 0:
       //------------LFO waveform poti: ---------------------------
       if (readAnalogChannel(P_WAVE, mil)) {
-          int sel = SAW;
+          int sel = SIN;
           int val = a_channel[P_WAVE].Avalue;
-          
-          if (val > 2972 )
+          if (val > 3950 )
             sel = SQR;  
-          else if (val > 1024 )
+          else if (val > 2800 )
             sel = RMP;  
+          else if (val > 1200 )
+            sel = SAW;  
+          else if (val > 200 )
+            sel = TRI;     
           lfo.waveForm = sel;
           requestToUpdate = true;
-        /* Serial.print(val);
-           Serial.print(" sel=");
-            Serial.println(sel);
-         */   
       }
       break;
       case 1:
       // LFO clock divider or freq.
       if (readAnalogChannel(P_CLOCK, mil)) {
         int val = a_channel[P_CLOCK].Avalue;
-        Serial.println(val);
+        //Serial.println(val);
         if (val <= 1)
           val = 1; // minimum
         freq = setFreeFreq(val);
@@ -173,7 +174,7 @@ void updateAnalogControls(int which) {
        //vres = ch2 >> 2; // scope value
        lfo.oldOutput = ch2;
    }
-    // Lifesign of interrupt routine, let the onboard LED blink
+    // Lifesign of interrupt routine, lets the onboard LED blink
   
    
   }

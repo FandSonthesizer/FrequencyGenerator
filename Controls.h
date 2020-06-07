@@ -1,6 +1,6 @@
 
 const int CHANGELIMIT = 3000;
-const int adjustDiff = 110, stableDiff = 30;
+const int adjustDiff = 10, stableDiff = 5;
 const int stableTime = 1200; //[ms]
 
 const uint16_t P_WAVE  = 0;

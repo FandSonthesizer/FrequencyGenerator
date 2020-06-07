@@ -51,39 +51,7 @@ void initGraphic() {
   display.setTextColor(WHITE);
 }
 
-void printHex(byte b) {
-  display.print("0x");
-  display.print(b, HEX);
-  display.print(",");
-  cx++;
-  if (cx > 3) {
-    cx = 0;
-    
-    display.println("");
-    cy++;
-    if (cy > 7) {
-      display.clearDisplay();
-      cy == 0;
-    }
-    display.setCursor(0, cy*8);
-  }
-  
-}
 
-/**
- * map to 128 * 64 pixel display
- * @param y in the range of 0-1024
- * @param x in the range of 0-4000;
- * 
- */
-void dispCurve(uint16_t y, uint32_t x, uint16_t max) {
-  uint16_t h = height - 1;
-  uint16_t xp = (uint16_t) (x & 0xffff) * width / max;
-  uint16_t yp = (y * h) >> 10;
-  display.drawLine(opx, h - opy, xp, h - yp, WHITE);
-  opx = xp;
-  opy = yp;
-}
 
 
 /**
@@ -116,6 +84,9 @@ void displayPage0(int freq, int wave) {
   //display.fillRect(x, y, width, h, 0);
   //display.print("W=");
   switch (wave) {
+    case 0:
+      display.println("TRI");
+      break; 
     case 1:
       display.println("SAW");
     break; 
@@ -124,6 +95,9 @@ void displayPage0(int freq, int wave) {
     break;
      case 3:
       display.println("SQR");
+    break;
+    case 4:
+      display.println("SIN");
     break;
   }
   

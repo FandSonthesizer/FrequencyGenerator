@@ -1,7 +1,8 @@
 /**
  * Describes the voices
  */
-
+#include "Sinus2048Int.h" // 2048
+#include "Tri2048Int.h" // 
 #include "Saw2048Int.h" // 
 #include "Log.h" // 
 #include "Essential_FrequencyGenerator.h"
@@ -142,23 +143,30 @@ void addLFOStep() {
   //Serial.println(indexInTable);
   int16_t c = 0;
   // High Res table (0-4095 as amplitude)
-  switch(lfo.waveForm) {
+  
+  switch (lfo.waveForm) {
     case SAW:
       c = getSawInt(indexInTable);
-    break;
+      break;
     case RMP:
-      c = getSawInt(indexInTable);  
+      c = getSawInt(indexInTable);
       c = c * -1;
-    break;
+      break;
+    case TRI:
+      c = getTriInt(indexInTable);
+      break;
+    case SIN:
+      c = getSinInt(indexInTable);
+      break;
     case SQR:
       if ( indexInTable < tableLength2) {
-        c = maxDACAmplitude2; 
+        c = maxDACAmplitude2;
       }
       else {
-        c = -maxDACAmplitude2; 
+        c = -maxDACAmplitude2;
       }
       break;
-    }
+  } 
   /*Serial.print(" raw out=");
     Serial.print(c);
     Serial.print(" vol=");
